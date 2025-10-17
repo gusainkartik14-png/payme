@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pay Me 💳</title>
+
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e0b6a68d.js" crossorigin="anonymous"></script>
+
+  <!-- Animate On Scroll -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+      perspective: 1000px;
+    }
+
+    /* Floating Currency Bubbles */
+    .currency-bubble {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(4px);
+      color: rgba(255, 255, 255, 0.9);
+      animation: floatCurrency linear infinite;
+      pointer-events: none;
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.7));
+      transition: transform 0.3s ease;
+    }
+
+    /* Glowing Trail */
+    .currency-bubble::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,215,0,0.4) 0%, transparent 70%);
+      opacity: 0.7;
+      transform: scale(1.5);
+      filter: blur(15px);
+      z-index: -1;
+      animation: trailPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes trailPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1.3); }
+      50% { opacity: 0.9; transform: scale(1.8); }
+    }
+
+    @keyframes floatCurrency {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      50% { transform: translateY(-40px) rotate(180deg); opacity: 0.9; }
+      100% { transform: translateY(0) rotate(360deg); opacity: 1; }
+    }
+
+    /* Card Design */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      padding: 40px 60px;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-size: 2.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .icon {
+      font-size: 60px;
+      color: #ffd700;
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    input[type="number"] {
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      width: 180px;
+      outline: none;
+      color: #333;
+    }
+
+    input[type="number"]:focus {
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    }
+
+    button {
+      background: linear-gradient(135deg, #ffd700, #ffb347);
+      border: none;
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      color: #222;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 10px rgba(255,215,0,0.5);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      text-align: center;
+      width: 100%;
+      z-index: 10;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .card {
+        padding: 30px 20px;
+        width: 90%;
+      }
+      .input-group {
+        flex-direction: column;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Currency Bubbles Container -->
+  <div id="currencyContainer"></div>
+
+  <!-- Main Card -->
+  <div class="card" data-aos="zoom-in">
+    <div class="icon"><i class="fas fa-credit-card"></i></div>
+    <h1>Pay Me</h1>
+    <p>Fast. Secure. Hassle-Free.</p>
+
+    <div class="input-group">
+      <input type="number" id="amount" placeholder="Enter amount" min="1" />
+      <button id="payNow">
+        <i class="fas fa-arrow-right"></i> Pay Now
+      </button>
+    </div>
+  </div>
+
+  <footer>© 2025 Pay Me. All rights reserved.</footer>
+
+  <!-- AOS Script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+
+  <!-- Main Script -->
+  <script>
+    const payNowButton = document.getElementById('payNow');
+    const amountInput = document.getElementById('amount');
+    const currencyContainer = document.getElementById('currencyContainer');
+    const symbols = ['₹', '$', '€', '£', '¥'];
+    const numBubbles = 15;
+    const bubbles = [];
+
+    // Create floating glowing bubbles
+    for (let i = 0; i < numBubbles; i++) {
+      const bubble = document.createElement('div');
+      bubble.classList.add('currency-bubble');
+      bubble.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      const size = Math.random() * 60 + 40;
+      const duration = Math.random() * 10 + 10;
+      const delay = Math.random() * 5;
+      const left = Math.random() * 100;
+      bubble.style.width = `${size}px`;
+      bubble.style.height = `${size}px`;
+      bubble.style.left = `${left}%`;
+      bubble.style.top = `${Math.random() * 100}%`;
+      bubble.style.animationDuration = `${duration}s`;
+      bubble.style.animationDelay = `${delay}s`;
+      currencyContainer.appendChild(bubble);
+      bubbles.push(bubble);
+    }
+
+    // Parallax effect on mouse move
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+      bubbles.forEach((bubble, i) => {
+        const speed = (i % 5) * 0.2 + 0.2; // different speeds for depth
+        const moveX = x * 30 * speed;
+        const moveY = y * 30 * speed;
+        bubble.style.transform = `translate(${moveX}px, ${moveY}px) scale(1) rotate(${i * 10}deg)`;
+      });
+    });
+
+    // Payment button
+    payNowButton.addEventListener('click', () => {
+      const amount = amountInput.value;
+      if (!amount || amount <= 0) {
+        alert('⚠️ Please enter a valid amount');
+        return;
+      }
+      const paymentUrl = `https://example-payment-gateway.com/pay?amount=${encodeURIComponent(amount)}`;
+      window.location.href = paymentUrl;
+    });
+  </script>
+</body>
+</html>
